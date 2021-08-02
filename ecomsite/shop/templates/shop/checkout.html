@@ -1,0 +1,91 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>CONNEXION</title>
+
+</head>
+<body>
+        <div class="container">
+            <div class="row">
+            <div class="col-md-12">
+                    <h1>LISTES DE LA COMMANDE</h1>
+                    <ul class="list-group" id="item_list">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="POST">
+                        <h1>FORMULAIRE DE COMMANDE</h1> <hr>
+                   {% csrf_token %}
+      <input  type="hidden" class="form-control" id="items" name="items">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Nom Prenoms</label>
+      <input id="name" name="name" type="text" class="form-control" id="inputEmail4" placeholder=" Bienvenue ABAME">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Email</label>
+      <input id="email" name="email" type="text" class="form-control" id="inputPassword4" placeholder="exemple@gmail.com">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAddress">Address</label>
+    <input id="adresse" name="adresse" type="text" class="form-control" id="inputAddress" placeholder="Agoe Rue 165">
+  </div>
+  <div class="form-group">
+    <label for="inputEmail4">Telephone</label>
+    <input id="numero" name="numero" type="text" class="form-control" id="inputEmail4" placeholder="92112673">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputCity">Ville</label>
+      <input id="ville" name="ville" type="text" class="form-control" id="inputCity">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Pays</label>
+       <input id="pays" name="pays" type="text" class="form-control" id="inputState">
+    </div>
+  </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">Prix Total</label>
+       <input readonly="" type="text" class="form-control" id="total" name="total">
+    </div>
+
+  <button type="submit" class="btn btn-primary">Passer Commande</button>
+</form>
+                </div>
+            </div>
+        </div>
+</body>
+<script type="text/javascript">
+    if(localStorage.getItem('cart')==null){
+        var cart = {};
+    }else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    let total = 0;
+for(item in cart){
+    let name = cart[item][1];
+    let quantity = cart[item][0];
+    let prix = cart[item][2];
+    total = total + cart[item][2]
+
+
+
+    itemString = `<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge badge-primary badge-pill">${quantity}</span> &nbsp de &nbsp ${name}<span class="badge-warning badge-pill">${prix}</span></li>`;
+      $('#item_list').append(itemString);
+}
+totalPrice = `<li class="list-group-item d-flex justify-content-between align-items-center"><b>Prix total</b><span class="badge badge-success">${total}</span></li>`;
+$('#total').val(total);
+$('#item_list').append(totalPrice);
+$('#items').val(JSON.stringify(cart));
+</script>
+</html>

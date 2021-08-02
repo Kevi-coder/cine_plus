@@ -1,0 +1,9 @@
+#detail_img {
+    height: 100%;
+    width: 100%;
+    align-items:center;
+}
+
+#full_row {
+    border: 15px solid green;
+}
